@@ -1,32 +1,58 @@
-import os, sys, json
-from random import shuffle
+import os, json
 
-# Open a file
-path = "./data/jester"
-dirs = os.listdir( path )
-ids=[]
-
-make_path="./env/jester"
-with open("ids.txt","r") as f:
+ids = []
+make_path='./env/jester'
+with open('ids.txt', 'r') as f:
     lines = f.readlines()
     for line in lines:
-        ids.append(line.replace("\n",""))
+        ids.append(line.replace('\n', ''))
 
-n_folder_per_id=1
+path = './data/jester'
+dirs = os.listdir(path)
+dirs_int = [int(d) for d in dirs]
+dirs_int.sort()
+dirs = [str(i) for i in dirs_int]
 
-folder_dict={i:[] for i in ids}
+n_dir_per_sess = 7                              #5000
+n_dir = len(dirs)                               #148092-5100=142992
+n_id = len(ids)                                #3
+n_sess_roundown = int(n_dir / n_dir_per_sess)   #28
 
-shuffle(dirs)
 
-print(ids,folder_dict)
+dir_dict_list = []
+### 온전한 세션
+n_dir_per_sess_per_id = int(n_dir_per_sess / n_id)
+rem_per_sess = n_dir_per_sess - n_id * n_dir_per_sess_per_id
+cnt = 0
+for sess in range(n_sess_roundown):
+    dir_dict = {i: [] for i in ids}
+    for id in ids:
+        if int(id[-1]) <= rem_per_sess:
+            for i in range(n_dir_per_sess_per_id+rem_per_sess):
+                dir_dict[id].append(dirs[cnt])
+                cnt += 1
+        else:
+            for i in range(n_dir_per_sess_per_id):
+                dir_dict[id].append(dirs[cnt])
+                cnt += 1
+    dir_dict_list.append(dir_dict)
 
+### 마지막 세션
+rem_dir = n_dir - n_dir_per_sess*n_sess_roundown
+n_dir_per_sess_per_id = int(rem_dir / n_id)
+rem_per_sess = rem_dir - n_id * n_dir_per_sess_per_id
+dir_dict = {i: [] for i in ids}
+while cnt < n_dir:
+    for id in ids:
+        if int(id[-1]) <= rem_per_sess:
+            for i in range(n_dir_per_sess_per_id+1):
+                dir_dict[id].append(dirs[cnt])
+                cnt += 1
+        else:
+            for i in range(n_dir_per_sess_per_id):
+                dir_dict[id].append(dirs[cnt])
+                cnt += 1
+    dir_dict_list.append(dir_dict)
 
-k=0
-for i in ids:
-	if i <> "vdo_ver":
-		for j in range(n_folder_per_id):
-			folder_dict[i].append(dirs[k])
-			k+=1
-
-json.dump(folder_dict,open(os.path.join(make_path,"job_assign.json"),"w"),indent=4)
-	
+print(dir_dict_list)
+json.dump(dir_dict_list, open(os.path.join(make_path, 'job_assign.json'), 'w')) #, indent=4)
