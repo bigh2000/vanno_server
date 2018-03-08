@@ -1,0 +1,26 @@
+<annotation>
+	<folder>1023</folder>
+	<filename>00013.jpg</filename>
+	<path>/home/vdo-data1/Desktop/data/jester/1023/00013.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>176</width>
+		<height>100</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Hand</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>44</xmin>
+			<ymin>22</ymin>
+			<xmax>92</xmax>
+			<ymax>89</ymax>
+		</bndbox>
+	</object>
+</annotation>
