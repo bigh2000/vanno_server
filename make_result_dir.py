@@ -2,11 +2,18 @@ import os
 
 # Open a file
 path = "./data/jester"
-dirs = os.listdir(path)
+try:
+    dirs = os.listdir(path)
+except:
+    os.makedirs(path)
+    dirs = os.listdir(path)
+dirs.sort()
 
 make_path="./results/jester"
 pre_dirs = os.listdir(make_path)
-print(dirs, pre_dirs)
+pre_dirs.sort()
+print(dirs)
+print(pre_dirs)
 
 for d in dirs:
     if d not in pre_dirs:
