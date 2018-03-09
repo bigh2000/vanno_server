@@ -13,7 +13,7 @@ dirs_int = [int(d) for d in dirs]
 dirs_int.sort()
 dirs = [str(i) for i in dirs_int]
 
-n_dir_per_sess = 7                           #5000
+n_dir_per_sess = 5000                           #5000
 n_dir = len(dirs)                               #148092                 -5100=142992
 n_id = len(ids)                                 #3
 n_sess_roundown = int(n_dir / n_dir_per_sess)   #29
