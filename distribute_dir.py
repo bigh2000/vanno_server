@@ -7,7 +7,7 @@ with open('ids.txt', 'r') as f:
     for line in lines:
         ids.append(line.replace('\n', ''))
 
-data_path = './data/jester'
+data_path = '../vanno_data/jester'
 dirs = os.listdir(data_path)
 dirs_int = [int(d) for d in dirs]
 dirs_int.sort()
